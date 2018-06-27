@@ -33,5 +33,9 @@ const InstrumentFamilies = function() {
 InstrumentFamilies.prototype.bindEvents = function () {
   const familyNames = this.instrumentFamilies.map(family => family.name);
   PubSub.publish("InstrumentFamilies: all families", familyNames);
+  PubSub.subscribe('SelectView: selection change', (event) =>{
+    const family = this.instrumentFamilies[event.detail];
+    PubSub.publish("InstrumentFamilies: selected family", family);
+  });
 };
 module.exports = InstrumentFamilies;
